@@ -19,6 +19,7 @@ To migrate this prototype to a physical factory Raspberry Pi, follow these steps
 As discussed, for the production hardware rollout, the following optimizations are recommended for the wireless sensor-to-Pi transmission:
 * **Protocol:** Transition from HTTP REST to **MQTT**. Run a lightweight Mosquitto broker on the Pi to handle high-frequency accelerometer data with near-zero latency.
 * **Payload Optimization:** Instead of transmitting JSON, the edge microcontrollers (e.g., ESP32) should pack the sensor readings into raw byte arrays. 
+* **Live POC:** The current `simulator.py` script includes a live Proof of Concept for this optimization. It utilizes Python's `struct` library to pack the telemetry data into a 17-byte C-style payload, demonstrating an **85%+ bandwidth reduction** over standard JSON arrays.
 * **Database Handling:** Once the Pi's MQTT subscriber receives the byte array, it unpacks the data and inserts it into the Supabase PostgreSQL database, where it is natively stored as highly compressed binary on the disk.
 
 ## 🗄️ Database Schema & Autonomous Logic
